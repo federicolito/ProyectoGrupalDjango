@@ -1,4 +1,5 @@
 from django.db import models
+import datetime
 
 # Create your models here.
 
@@ -63,8 +64,6 @@ class Boleto(models.Model):
         valor = self.pelicula.precio_base
         self.monto_total = valor
         return valor
-        
-    monto_total.short_description = 'Monto Total'
 
     def __str__(self):
         return str(self.pelicula) + ' - Asiento: ' + str(self.asiento)
@@ -94,7 +93,6 @@ class Paquete(models.Model):
     combo_comida = models.ForeignKey(Combo_Comida, on_delete=models.CASCADE)
     precio_final = models.IntegerField(default=0, blank=True, null=True)
 
-
     def precio_total(self):
         valor_boleto = self.boleto.precio_final()
         valor_combo = self.combo_comida.precio_final()
@@ -103,4 +101,7 @@ class Paquete(models.Model):
         self.precio_final = valor
         return valor
     
-    
+    def __str__(self):
+        fechayhora = datetime.datetime.now()
+        fecha_y_hora = fechayhora.strftime("%d-%m-%Y %H:%M:%S")
+        return fecha_y_hora

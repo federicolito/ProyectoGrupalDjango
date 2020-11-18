@@ -10,9 +10,10 @@ class boleto_Admin(admin.ModelAdmin):
     exclude = ['monto_total']
     list_display = ['pelicula', 'asiento', 'precio_final']
 
+
 class paquete_Admin(admin.ModelAdmin):
     exclude = ['precio_final']
-    list_display = ['precio_total']
+    list_display = ['__str__', 'precio_total']
 
 # Register your models here.
 
