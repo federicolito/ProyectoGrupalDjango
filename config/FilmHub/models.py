@@ -61,8 +61,9 @@ class Boleto(models.Model):
 
     def precio_final(self):
         valor = self.pelicula.precio_base
-        return '$' + str(valor)
         self.monto_total = valor
+        return valor
+        
     monto_total.short_description = 'Monto Total'
 
     def __str__(self):
@@ -80,15 +81,14 @@ class Combo_Comida(models.Model):
 
     def precio_final(self):
         valor = (self.comida.precio_unidad * self.cant_comida + self.bebida.precio_unidad * self.cant_bebida)
-        return '$' + str(valor)
         self.monto_total = valor
+        return valor
 
     def __str__(self):
         return str(self.cant_comida) + " " + str(self.comida) + " y " + str(self.cant_bebida) + " " + str(self.bebida)
 
 
 
-"""
 class Paquete(models.Model):
     boleto = models.ForeignKey(Boleto, on_delete=models.CASCADE)
     combo_comida = models.ForeignKey(Combo_Comida, on_delete=models.CASCADE)
@@ -96,7 +96,11 @@ class Paquete(models.Model):
 
 
     def precio_total(self):
-        valor = (self.boleto.precio_final, self.combo_comida.precio_final)
-        return '$' + str(valor)
+        valor_boleto = self.boleto.precio_final()
+        valor_combo = self.combo_comida.precio_final()
+        valor = valor_boleto + valor_combo
+
         self.precio_final = valor
-"""
+        return valor
+    
+    
