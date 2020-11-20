@@ -12,6 +12,7 @@ urlpatterns = [
     
     path('about/', views.ContactView.as_view(), name="aboutView"),
     path('register/', views.RegisterView, name="registerView"),
+    path('funciones/<str:pelicula>', views.FuncionesView, name="funciones"),
     path('logout/', views.LogoutUser, name="logoutView"),
     path('login/', views.LoginView, name="loginView"),
     path('403/', views.permission_denied_view,name="permisionDenied"),
