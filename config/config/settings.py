@@ -121,3 +121,29 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_URL = '/img/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+STATIC_ROOT = os.path.join(BASE_DIR,'config/static/')
+
+#msmp configruration
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+ACCOUNT_ACTIVATION_DAYS = 3
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'filmhubofficialpro@gmail.com'
+EMAIL_HOST_PASSWORD = 'Pepito123'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+
+
+
+
+
+
