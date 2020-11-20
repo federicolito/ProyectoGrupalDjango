@@ -63,7 +63,18 @@ def LogoutUser(request):
     return redirect('loginView')
 
 
+@login_required(login_url='login')
+def FuncionesView(request,pelicula):
+    pelicula = Pelicula.objects.get(pk=pelicula)
+    now = datetime.datetime.now()
+    funciones = Funcion.objects.filter(pelicula=pelicula,horario__gte=now)
+    
 
+    
+    context= {
+    'pelicula':pelicula,
+    'funciones':funciones}
+    return render(request, 'FilmHub/funciones.html', context)
 def HomeView(request):
     peliculas = Pelicula.objects.all()
 
