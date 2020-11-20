@@ -10,6 +10,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 from .decorators import unauthenticated_user
 from .forms import CreateUserForm, UserForm
@@ -64,7 +65,13 @@ def LogoutUser(request):
 
 
 def HomeView(request):
-    context={}
+    peliculas = Pelicula.objects.all()
+
+
+    paginator = Paginator(peliculas,10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context={'peliculas':page_obj}
     return render(request, 'FilmHub/home.html',context)
 
 
