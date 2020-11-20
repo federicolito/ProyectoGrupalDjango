@@ -7,10 +7,10 @@
     <div class="col-md-auto">
         <div class="card card-body"; style='margin-bottom:30px'>
             <div class="row justify-content-center">
-            <h3>{{pelicula.nombre}}</h3>
+                <a href="{% url 'funciones' pelicula.id %}" class="ml-2"><h3>{{pelicula.nombre}}</h3></a>
             </div>
             <div class="row justify-content-center">
-            <img width="320" height="432" src='{{pelicula.portada.url}}'>
+                <img width="320" height="432" src='{{pelicula.portada.url}}'>
             </div>
         </div>
     </div>
