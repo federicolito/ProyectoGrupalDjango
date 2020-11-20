@@ -30,6 +30,7 @@ class Pelicula(models.Model):
 
     nombre = models.CharField(max_length=25)
     descripcion = models.CharField(max_length=100)
+    portada = models.ImageField(default='default.jpg', upload_to='static/portadas')
     duracion = models.TimeField(null=True)
     precio_base = models.IntegerField(default=0, blank=True, null=True)
     #funcion = models.ForeignKey(Funcion, on_delete=models.CASCADE)
