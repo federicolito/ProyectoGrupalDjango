@@ -63,11 +63,12 @@ def LogoutUser(request):
     return redirect('loginView')
 
 
-@login_required(login_url='login')
+@login_required(login_url='loginView')
 def FuncionesView(request,pelicula):
     pelicula = Pelicula.objects.get(pk=pelicula)
     now = datetime.datetime.now()
-    funciones = Funcion.objects.filter(pelicula=pelicula,horario__gte=now)
+    #,horario__gte=now
+    funciones = Funcion.objects.filter(pelicula=pelicula)
     
 
     
@@ -88,7 +89,7 @@ def HomeView(request):
 
     
 
-@login_required(login_url='login')
+@login_required(login_url='loginView')
 def ProfileView(request):
     user = request.user
     form = UserForm(instance=user)

@@ -19,6 +19,7 @@ urlpatterns = [
     path('404/', views.page_not_found_view,name="pagenotfound"),
 
     path('client/profile/', views.ProfileView, name="profileView"),
+    path('client/mytickets/', views.MyTicketsView, name="my_tickets"),
     
 
 
