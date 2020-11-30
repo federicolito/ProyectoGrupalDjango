@@ -5,6 +5,7 @@
 {% url 'loginView' as login_url %}
 {% url 'logoutView' as logout_url %}
 {% url 'profileView' as profile_url %}
+{% url 'my_tickets' as tickets_url %}
 
 <nav class="navbar sticky-top navbar-expand-sm navbar-dark bg-dark">
     <a class="navbar-brand" href="{% url 'homeView' %}">
@@ -17,14 +18,14 @@
             <li class="nav-item{% if request.path == home_url %} active{%elif  request.path == home_client_url %} active {%endif%}">
                 <a class="nav-link" href="{{home_url}}">Home <span class="sr-only">(current)</span></a>
             </li>
+            {% if request.user.is_authenticated  %}
+            <li class="nav-item {% if request.path == groups_url %} active {%endif%}">
+                <a class="nav-link" href="{{tickets_url}}">Your tickets</a>
+            </li>
+            {% endif %}
             <li class="nav-item {% if request.path == about_url %} active {%endif%}">
                 <a class="nav-link" href="{{about_url}}">About</a>
             </li>
-            {% if request.user.is_authenticated  %}
-            <li class="nav-item {% if request.path == groups_url %} active {%endif%}">
-                <a class="nav-link" href="{{groups_url}}">Your tickets</a>
-            </li>
-            {% endif %}
             
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
