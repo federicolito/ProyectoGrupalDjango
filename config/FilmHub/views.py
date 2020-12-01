@@ -69,13 +69,21 @@ def FuncionesView(request,pelicula):
     now = datetime.datetime.now()
     #,horario__gte=now
     funciones = Funcion.objects.filter(pelicula=pelicula)
-    
+
+
+@login_required(login_url='loginView')
+def MyTicketsView(request):
+    boletos = Boleto.objects.get(user=request.user)
+    now = datetime.datetime.now()
+    #,horario__gte=now
+    funciones = Funcion.objects.filter(pelicula=pelicula)
+
 
     
     context= {
-    'pelicula':pelicula,
-    'funciones':funciones}
-    return render(request, 'FilmHub/funciones.html', context)
+        'boletos':boletos,
+    }
+    return render(request, 'FilmHub/my_tickets.html', context)
 def HomeView(request):
     peliculas = Pelicula.objects.all()
 

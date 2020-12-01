@@ -1,8 +1,8 @@
 from django.db import models
 import datetime
+from django.contrib.auth.models import User
 
 # Create your models here.
-
 #-----------------------------------------------------------------------------
 
 class Sala(models.Model):
@@ -114,6 +114,7 @@ class Combo_Comida(models.Model):
 class Factura(models.Model):
     boleto = models.ForeignKey(Boleto, on_delete=models.CASCADE)
     combo_comida = models.ForeignKey(Combo_Comida, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     precio_final = models.IntegerField(default=0, blank=True, null=True)
 
     def precio_total(self):
