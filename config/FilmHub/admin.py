@@ -7,8 +7,8 @@ class sala_Admin(admin.ModelAdmin):
     pass
 
 class asiento_Admin(admin.ModelAdmin):
-    list_display = ['fila', 'butaca']
-    list_display_links = ['fila', 'butaca']
+    list_display = ['fila', 'butaca','sala']
+    list_display_links = ['fila', 'butaca','sala']
     fieldsets = (
         ('Asiento', {
             'fields':('fila', 'butaca')

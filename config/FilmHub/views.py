@@ -63,25 +63,39 @@ def LogoutUser(request):
     return redirect('loginView')
 
 
-@login_required(login_url='loginView')
+@login_required(login_url='login')
 def FuncionesView(request,pelicula):
     pelicula = Pelicula.objects.get(pk=pelicula)
     now = datetime.datetime.now()
-    #,horario__gte=now
-    funciones = Funcion.objects.filter(pelicula=pelicula)
+    funciones = Funcion.objects.filter(pelicula=pelicula,horario__gte=now)
+    for s in range(1,5,):
+        sala = Sala.objects.get(numero=int(s))
+        
+        filas = ["A","B","C","D","E","F","G"]
+        for fila in filas:
+            for butaca in range(20):
+                asiento = Asiento(fila=fila,butaca=int(butaca),sala=sala)
+                asiento.save()
+
+    
+    context= {
+    'pelicula':pelicula,
+    'funciones':funciones}
+    return render(request, 'FilmHub/funciones.html', context)
 
 
 @login_required(login_url='loginView')
 def MyTicketsView(request):
-    boletos = Boleto.objects.get(user=request.user)
+    facturas = Factura.objects.filter(user=request.user)
+    
     now = datetime.datetime.now()
     #,horario__gte=now
-    funciones = Funcion.objects.filter(pelicula=pelicula)
+    
 
 
     
     context= {
-        'boletos':boletos,
+        'facturas':facturas
     }
     return render(request, 'FilmHub/my_tickets.html', context)
 def HomeView(request):
@@ -97,7 +111,7 @@ def HomeView(request):
 
     
 
-@login_required(login_url='loginView')
+@login_required(login_url='login')
 def ProfileView(request):
     user = request.user
     form = UserForm(instance=user)
