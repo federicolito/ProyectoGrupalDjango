@@ -28,13 +28,13 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-md">
-                        HORARIO
+                        FECHA Y HORA
                     </div>
                     <div class="col-md">
                         SALA
                     </div>
                     <div class="col-md">
-                        PRECIO
+                        RESERVAS
                     </div>
                     
                 </div>
@@ -48,7 +48,7 @@
                             {{funcion.sala}}
                         </div>
                         <div class="col-md">
-                            <a class="nav-link" href="{% url 'buy_ticket' funcion.pk  %}">BUY ${{funcion.pelicula.precio_base}}</a>
+                            <a class="btn btn-success" href="{% url 'buy_ticket' funcion.pk  %}">COMPRAR</a>
                         </div>
 
                     </div>
