@@ -68,20 +68,27 @@ def FuncionesView(request,pelicula):
     pelicula = Pelicula.objects.get(pk=pelicula)
     now = datetime.datetime.now()
     funciones = Funcion.objects.filter(pelicula=pelicula,horario__gte=now)
-    for s in range(1,5,):
-        sala = Sala.objects.get(numero=int(s))
-        
-        filas = ["A","B","C","D","E","F","G"]
-        for fila in filas:
-            for butaca in range(20):
-                asiento = Asiento(fila=fila,butaca=int(butaca),sala=sala)
-                asiento.save()
+    
+
 
     
     context= {
     'pelicula':pelicula,
     'funciones':funciones}
     return render(request, 'FilmHub/funciones.html', context)
+
+@login_required(login_url='login')
+def BuyTicketView(request,funcion):
+    funcion = Funcion.objects.get(pk=funcion)
+    now = datetime.datetime.now()
+    
+
+
+    
+    context= {
+    'funcion':funcion}
+    return render(request, 'FilmHub/buy_ticket.html', context)
+
 
 
 @login_required(login_url='loginView')
