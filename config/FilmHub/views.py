@@ -63,7 +63,7 @@ def LogoutUser(request):
     return redirect('loginView')
 
 
-@login_required(login_url='login')
+@login_required(login_url='loginView')
 def FuncionesView(request,pelicula):
     pelicula = Pelicula.objects.get(pk=pelicula)
     now = datetime.datetime.now()
