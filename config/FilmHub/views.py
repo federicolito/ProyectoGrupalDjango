@@ -77,7 +77,7 @@ def FuncionesView(request,pelicula):
     'funciones':funciones}
     return render(request, 'FilmHub/funciones.html', context)
 
-@login_required(login_url='login')
+@login_required(login_url='loginView')
 def BuyTicketView(request,funcion):
     funcion = Funcion.objects.get(pk=funcion)
     now = datetime.datetime.now()
@@ -118,7 +118,7 @@ def HomeView(request):
 
     
 
-@login_required(login_url='login')
+@login_required(login_url='loginView')
 def ProfileView(request):
     user = request.user
     form = UserForm(instance=user)
