@@ -61,8 +61,8 @@ class bebida_Admin(admin.ModelAdmin):
 
 class combo_comida_Admin(admin.ModelAdmin):
     exclude = ['monto_total']
-    list_display = ['comida', 'cant_comida', 'bebida', 'cant_bebida', 'precio_final']
-    list_display_links = ['comida', 'bebida', 'precio_final']
+    list_display = ['comida', 'cant_comida', 'bebida', 'cant_bebida']
+    list_display_links = ['comida', 'bebida']
 
 #-----------------------------------------------------------------------------
 

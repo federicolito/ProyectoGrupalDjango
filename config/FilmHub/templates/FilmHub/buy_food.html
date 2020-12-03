@@ -70,8 +70,8 @@ about page
                     </div>
                 </div>
                 <div class="row justify-content-around">
-                    <form method="POST" action="" id="asientosForm">
-                            <div class="row justify-content-around">
+                    <form method="post" action="" id="foodForm">
+                        <div class="row justify-content-around">
                             {% csrf_token %}
                             <div class="col-md">
                                 {{form.comida}}
@@ -85,15 +85,23 @@ about page
                             <div class="col-md">
                                 {{form.cant_bebida}}
                             </div>
+                            
                         </div>
                         <br>
                         <div class="row justify-content-center">
-                            <input class="btn btn-success" type="submit" value="Continuar">
+                            <label>Sin alimentos(solo boleto):<input type="checkbox" onclick="changeVisibility()" name="sinAlimentos"></label>
                         </div>
                         <div class="row justify-content-center">
-                            <a class="btn btn-error" href="{%url 'my_tickets'%}">Continuar sin comida</a>
+
+                            <div class="col-md">
+                                <div class="row justify-content-center">
+                                    <input class="btn btn-success" type="submit" value="Continuar">
+                                </div>
+                            </div>
+        
                         </div>
                     </form>
+
                 </div>
                 
 

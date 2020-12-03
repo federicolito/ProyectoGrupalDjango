@@ -102,9 +102,7 @@ class Combo_Comida(models.Model):
     bebida = models.ForeignKey(Bebida, on_delete=models.CASCADE, blank=True, null=True)
     cant_bebida = models.IntegerField(default=0, blank=True, null=True)
 
-    def precio_final(self):
-        valor = (self.comida.precio_unidad * self.cant_comida + self.bebida.precio_unidad * self.cant_bebida)
-        return "$" + str(valor)
+    
 
     def __str__(self):
         return str(self.cant_comida) + " " + str(self.comida) + " y " + str(self.cant_bebida) + " " + str(self.bebida)
@@ -119,12 +117,8 @@ class Factura(models.Model):
 
     def precio_total(self):
         valor_boleto = self.boleto.funcion.pelicula.precio_base * len(self.boleto.asientos.all())
-        if (self.combo_comida !=None):
-            valor_combo = self.combo_comida.comida.precio_unidad * self.combo_comida.cant_comida + self.combo_comida.bebida.precio_unidad * self.combo_comida.cant_bebida
-            valor = valor_boleto + valor_combo
-            self.precio_final = valor
-        else:
-            self.precio_final = valor_boleto
+    
+        self.precio_final = valor_boleto
         self.save()
 
     def __str__(self):

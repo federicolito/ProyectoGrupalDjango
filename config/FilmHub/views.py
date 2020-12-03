@@ -127,26 +127,29 @@ def BuyFoodView(request, boleto):
 
     form=ComboComidaForm()
     if request.method =="POST":
-        form = ComboComidaForm(request.POST)
-        if form.is_valid():
-            combo_comida = form.save()
-            
-            messages.success(request, "Su compra se realizó con éxito")
-            factura = Factura(boleto=boleto, combo_comida=combo_comida, user=request.user)
-            factura.save()
-            factura.precio_total()
-            return redirect('my_tickets')
-        else:
+        sinAlimentos = request.POST.get("sinAlimentos")
+        if sinAlimentos == "on":
             factura = Factura(boleto=boleto, user=request.user)
             factura.save()
             factura.precio_total()
             return redirect('my_tickets')
+        
+        else:
+            form = ComboComidaForm(request.POST)
+            if form.is_valid():
+                combo_comida = form.save()
+                
+                messages.success(request, "Su compra se realizó con éxito")
+                factura = Factura(boleto=boleto, combo_comida=combo_comida, user=request.user)
+                factura.save()
+                factura.precio_total()
+                return redirect('my_tickets')
+            
+            
+    
     context= {
-        'form':form
-    }
-    context= {
-    "boleto":boleto,
-    "form":form
+        "boleto":boleto,
+        "form":form
     }
     return render(request, 'FilmHub/buy_food.html', context)
 
