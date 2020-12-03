@@ -15,7 +15,7 @@ class Sala(models.Model):
 
 class Asiento(models.Model):
     id = models.AutoField(primary_key=True)
-
+    reservado = models.BooleanField(default=False)
     fila = models.CharField(max_length=1)
     butaca = models.IntegerField(default=0, blank=True, null=True)
     sala = models.ForeignKey(Sala, on_delete=models.CASCADE, null=True)
@@ -56,17 +56,17 @@ class Funcion(models.Model):
 class Boleto(models.Model):
     id = models.AutoField(primary_key=True)
 
-    asiento = models.ForeignKey(Asiento, on_delete=models.CASCADE, null=True)
-    funcion = models.ForeignKey(Funcion, on_delete=models.CASCADE, null=True)
+    asientos = models.ManyToManyField(Asiento, blank=True)
+    funcion = models.ForeignKey(Funcion, on_delete=models.SET_NULL, null=True)
     #pelicula = models.ForeignKey(Pelicula, on_delete=models.CASCADE)
 
     def precio_final(self):
-        valor = self.funcion.pelicula.precio_base
+        valor = self.funcion.pelicula.precio_base * len(self.asientos.all())
         self.monto_total = valor
         return "$" + str(valor)
 
     def __str__(self):
-        return str(self.funcion) + " | " + str(self.asiento)
+        return str(self.funcion) + " | " + str(self.asientos.__str__())
 
 #-----------------------------------------------------------------------------
 
@@ -118,10 +118,13 @@ class Factura(models.Model):
     precio_final = models.IntegerField(default=0, blank=True, null=True)
 
     def precio_total(self):
-        valor_boleto = self.boleto.funcion.pelicula.precio_base
-        valor_combo = self.combo_comida.comida.precio_unidad * self.combo_comida.cant_comida + self.combo_comida.bebida.precio_unidad * self.combo_comida.cant_bebida
-        valor = valor_boleto + valor_combo
-        self.precio_final = valor
+        valor_boleto = self.boleto.funcion.pelicula.precio_base * len(self.boleto.asientos.all())
+        if (self.combo_comida !=None):
+            valor_combo = self.combo_comida.comida.precio_unidad * self.combo_comida.cant_comida + self.combo_comida.bebida.precio_unidad * self.combo_comida.cant_bebida
+            valor = valor_boleto + valor_combo
+            self.precio_final = valor
+        else:
+            self.precio_final = valor_boleto
         self.save()
 
     def __str__(self):

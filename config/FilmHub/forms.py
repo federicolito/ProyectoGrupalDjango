@@ -58,7 +58,8 @@ class UserForm(ModelForm):
         model = SubGroup
         fields = ['sub_group_name','devices_without_subgroup','devices_with_subgroup']'''
 
-    
+
+
 
         
 class CreateUserForm(UserCreationForm):

@@ -12,6 +12,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.core.paginator import Paginator
 
+
 from .decorators import unauthenticated_user
 from .forms import CreateUserForm, UserForm
 from .models import *
@@ -66,7 +67,9 @@ def LogoutUser(request):
 @login_required(login_url='loginView')
 def FuncionesView(request,pelicula):
     pelicula = Pelicula.objects.get(pk=pelicula)
+
     now = datetime.datetime.now()
+    
     funciones = Funcion.objects.filter(pelicula=pelicula,horario__gte=now)
     
 
@@ -80,13 +83,46 @@ def FuncionesView(request,pelicula):
 @login_required(login_url='loginView')
 def BuyTicketView(request,funcion):
     funcion = Funcion.objects.get(pk=funcion)
-    now = datetime.datetime.now()
+    asientos = Asiento.objects.filter(sala=funcion.sala)
+    filas =['A','B','C','D','E'] 
+    asientosElegidos = []
+    asiento = None
+    guardarForm = False
+    for fila in filas:
+        
+        for butaca in range(20):
+            if request.GET.get(fila+str(butaca)):
+                asiento = request.GET.get(fila+str(butaca))
+                
+                asiento = Asiento.objects.get(pk=asiento)
+                asiento.reservado= True
+                asiento.save()
+                asientosElegidos.append(asiento)
+                guardarForm = True
+
+    if guardarForm :
+        boleto = Boleto(funcion=funcion)
+        boleto.save()
+        for asiento in asientosElegidos:
+            boleto.asientos.add(asiento)
+        boleto.save()
+        
+        factura = Factura(boleto=boleto,user=request.user)
+        factura.save()
+        factura.precio_total()
+        return redirect('my_tickets')
     
+
+                
+
 
 
     
     context= {
-    'funcion':funcion}
+    'funcion':funcion,
+    'asientos':asientos, 
+    'filas':filas
+    }
     return render(request, 'FilmHub/buy_ticket.html', context)
 
 
@@ -97,7 +133,6 @@ def MyTicketsView(request):
     
     now = datetime.datetime.now()
     #,horario__gte=now
-    
 
 
     

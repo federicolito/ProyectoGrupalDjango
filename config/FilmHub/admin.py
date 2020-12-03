@@ -15,6 +15,9 @@ class asiento_Admin(admin.ModelAdmin):
         }),
         ('Sala', {
             'fields':('sala',)
+        }),
+        ('Reserva', {
+            'fields':('reservado',)
         })
     )
 
@@ -41,8 +44,8 @@ class funcion_Admin(admin.ModelAdmin):
 
 class boleto_Admin(admin.ModelAdmin):
     exclude = ['monto_total']
-    list_display = ['funcion', 'asiento', 'precio_final']
-    list_display_links = ['funcion', 'asiento', 'precio_final']
+    list_display = ['funcion', 'precio_final']
+    list_display_links = ['funcion', 'precio_final']
 
 #-----------------------------------------------------------------------------
 
