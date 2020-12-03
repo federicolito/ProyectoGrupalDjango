@@ -117,9 +117,15 @@ class Factura(models.Model):
 
     def precio_total(self):
         valor_boleto = self.boleto.funcion.pelicula.precio_base * len(self.boleto.asientos.all())
-    
-        self.precio_final = valor_boleto
+        try:
+            valor_alimentos = self.combo_comida.comida.precio_unidad * self.combo_comida.cant_comida + self.combo_comida.bebida.precio_unidad * self.combo_comida.cant_bebida
+            self.precio_final = valor_boleto + valor_alimentos
+            print ("no dio error")
+        except:
+            self.precio_final = valor_boleto
+            print ("dio error")
         self.save()
+        return self.precio_final
 
     def __str__(self):
         fechayhora = datetime.datetime.now()

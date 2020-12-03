@@ -81,7 +81,7 @@ class ComboComidaForm(ModelForm):
         fields = ['comida','cant_comida','bebida','cant_bebida']
     def __init__(self, *args, **kwargs):
         super(ComboComidaForm, self).__init__(*args, **kwargs)
-        self.fields['comida'].required = False
-        self.fields['bebida'].required = False
+        self.fields['comida'].required = True
+        self.fields['bebida'].required = True
 
     fields = ['basic_field']
