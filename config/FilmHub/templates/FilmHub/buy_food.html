@@ -1,0 +1,105 @@
+{% extends 'FilmHub/main.html'%}
+about page
+{% block content %}
+
+
+
+<div class="container h-100">
+    <div class="row justify-content-around">
+
+        <div class="col-sm-auto">
+                        
+            <div style="margin:10px 0px 10px 0px" class="row justify-content-center">
+                <div style="color:white;background-color:black;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-style: none dashed none none;border-color: #fef107ff;border-width: 3px;" class="card card-body">
+                    <div class="col-md-auto">
+                        <div class="row justify-content-center">
+                            <h5>SALA</h5>
+                        </div>
+                        <div class="row justify-content-center">
+                            <h1><b>{{ boleto.funcion.sala.numero }}</b></h1>
+                        </div>
+                        <div class="row justify-content-center">
+                            <h3>ASIENTOS </h3>
+                        
+                        </div>
+                        <div class="row justify-content-center">
+                            <h6><b> {% for asiento in boleto.asientos.all %}{{ asiento.fila}}{{ asiento.butaca}}, {%endfor%}</b> </h6>
+                        </div>
+                    </div>
+                </div>
+                <div style="color:black;background-color:#fef107ff;border-top-left-radius: 0px;border-bottom-left-radius: 0px;border-style: none none none dashed;border-color: black;border-width: 3px;" class="card card-body">
+                    <div class="col-md-auto">
+                        <div class="row justify-content-left">
+                            <h3><b>SALA {{ boleto.funcion.sala.numero }}</b></h3>
+                        </div>
+                        <div class="row justify-content-left">
+                            {{ boleto.funcion.horario }}
+                        </div>
+                        <div class="row justify-content-left">
+                            {{ boleto.funcion.pelicula }}
+                        </div>
+                        <div class="row justify-content-left">
+                            {{ boleto.precio_final }}
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-sm-auto">
+            <div class="card card-body">
+                <div class="row justify-content-center">
+                    <h3>Selección de comidas</h3>
+
+                </div>
+
+                <div class="row justify-content-around">
+                    <div class="col-md">
+                        Comida
+                    </div>
+                    <div class="col-md">
+                        Cantidad
+                    </div>
+                    <div class="col-md">
+                        Bebida
+                    </div>
+                    <div class="col-md">
+                        Cantidad
+                    </div>
+                </div>
+                <div class="row justify-content-around">
+                    <form method="POST" action="" id="asientosForm">
+                            <div class="row justify-content-around">
+                            {% csrf_token %}
+                            <div class="col-md">
+                                {{form.comida}}
+                            </div>
+                            <div class="col-md">
+                                {{form.cant_comida}}
+                            </div>
+                            <div class="col-md">
+                                {{form.bebida}}
+                            </div>
+                            <div class="col-md">
+                                {{form.cant_bebida}}
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row justify-content-center">
+                            <input class="btn btn-success" type="submit" value="Continuar">
+                        </div>
+                        <div class="row justify-content-center">
+                            <a class="btn btn-error" href="{%url 'my_tickets'%}">Continuar sin comida</a>
+                        </div>
+                    </form>
+                </div>
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

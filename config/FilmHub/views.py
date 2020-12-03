@@ -14,7 +14,7 @@ from django.core.paginator import Paginator
 
 
 from .decorators import unauthenticated_user
-from .forms import CreateUserForm, UserForm
+from .forms import CreateUserForm, UserForm, ComboComidaForm
 from .models import *
 from django.views.generic import TemplateView
 
@@ -106,10 +106,7 @@ def BuyTicketView(request,funcion):
             boleto.asientos.add(asiento)
         boleto.save()
         
-        factura = Factura(boleto=boleto,user=request.user)
-        factura.save()
-        factura.precio_total()
-        return redirect('my_tickets')
+        return redirect('buy_food',boleto.pk)
     
 
                 
@@ -123,6 +120,36 @@ def BuyTicketView(request,funcion):
     'filas':filas
     }
     return render(request, 'FilmHub/buy_ticket.html', context)
+
+@login_required(login_url='loginView')
+def BuyFoodView(request, boleto):
+    boleto = Boleto.objects.get(pk=boleto)
+
+    form=ComboComidaForm()
+    if request.method =="POST":
+        form = ComboComidaForm(request.POST)
+        if form.is_valid():
+            combo_comida = form.save()
+            
+            messages.success(request, "Su compra se realizó con éxito")
+            factura = Factura(boleto=boleto, combo_comida=combo_comida, user=request.user)
+            factura.save()
+            factura.precio_total()
+            return redirect('my_tickets')
+        else:
+            factura = Factura(boleto=boleto, user=request.user)
+            factura.save()
+            factura.precio_total()
+            return redirect('my_tickets')
+    context= {
+        'form':form
+    }
+    context= {
+    "boleto":boleto,
+    "form":form
+    }
+    return render(request, 'FilmHub/buy_food.html', context)
+
 
 
 

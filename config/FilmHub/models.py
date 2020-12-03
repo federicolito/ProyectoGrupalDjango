@@ -66,7 +66,7 @@ class Boleto(models.Model):
         return "$" + str(valor)
 
     def __str__(self):
-        return str(self.funcion) + " | " + str(self.asientos.__str__())
+        return str(self.funcion) + " | " + str(self.asientos.all().__str__())
 
 #-----------------------------------------------------------------------------
 
@@ -97,9 +97,9 @@ class Bebida(models.Model):
 class Combo_Comida(models.Model):
     id = models.AutoField(primary_key=True)
 
-    comida = models.ForeignKey(Comida, on_delete=models.CASCADE)
+    comida = models.ForeignKey(Comida, on_delete=models.CASCADE, blank=True, null=True)
     cant_comida = models.IntegerField(default=0, blank=True, null=True)
-    bebida = models.ForeignKey(Bebida, on_delete=models.CASCADE)
+    bebida = models.ForeignKey(Bebida, on_delete=models.CASCADE, blank=True, null=True)
     cant_bebida = models.IntegerField(default=0, blank=True, null=True)
 
     def precio_final(self):

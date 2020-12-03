@@ -72,3 +72,16 @@ class CreateUserForm(UserCreationForm):
         super(CreateUserForm, self).__init__(*args, **kwargs)
         self.fields['last_name'].required = True
         self.fields['first_name'].required = True
+
+class ComboComidaForm(ModelForm):
+    #last_name = forms.CharField(blank=False)
+    #first_name = forms.CharField(blank=False)
+    class Meta:
+        model = Combo_Comida
+        fields = ['comida','cant_comida','bebida','cant_bebida']
+    def __init__(self, *args, **kwargs):
+        super(ComboComidaForm, self).__init__(*args, **kwargs)
+        self.fields['comida'].required = False
+        self.fields['bebida'].required = False
+
+    fields = ['basic_field']
