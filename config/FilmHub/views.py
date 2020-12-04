@@ -131,6 +131,7 @@ def BuyFoodView(request, boleto):
     if request.method =="POST":
         sinAlimentos = request.POST.get("sinAlimentos")
         if sinAlimentos == "on":
+            messages.success(request, "Su compra se realizó con éxito")
             factura = Factura(boleto=boleto, user=request.user)
             factura.save()
             factura.precio_total()
@@ -195,6 +196,7 @@ def ProfileView(request):
         form = UserForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
+            messages.success(request, "Su perfil fue actualizado")
     context= {'form':form}
     return render(request, 'FilmHub/profile.html', context)
 
