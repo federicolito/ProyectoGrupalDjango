@@ -3,7 +3,7 @@
 
 <div class="container h-100">
     <div class="row justify-content-around">
-        
+    
         
             
                 
@@ -33,8 +33,31 @@
                             
                         </div>
                     </div>
-                    <div style="color:black;background-color:#fef107ff;border-top-left-radius: 0px;border-bottom-left-radius: 0px;border-style: none none none dashed;border-color: black;border-width: 3px;" class="card card-body">
-                        <div class="col-md-auto">
+                    <style>
+                    
+                    .background:after {
+                        position: absolute;
+                        content: " ";
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        z-index: 0;
+                        background-color: rgba(255, 255, 0, 0.7);
+                    }
+                    .content{
+                        
+                        content: " ";
+                        
+                        width: 100%;
+                        height: 100%;
+                        z-index: 1;
+                    }
+                    
+                    </style>
+                    
+                    <div  style="background: url('{{factura.boleto.funcion.pelicula.portada.url}}') ;background-size: 100% 100%;color:black;border-top-left-radius: 0px;border-bottom-left-radius: 0px;border-style: none none none dashed;border-color: black;border-width: 3px;" class="card card-body background">
+                        <div class="col-md-auto content">
                             <div class="row justify-content-left">
                                 <h3><b>FUNCION </b></h3>
                             </div>
@@ -59,6 +82,10 @@
                             <div class="row justify-content-left">
                                 {{ factura }}
                             </div>
+                            <div class="row justify-content-left" >
+                                <h6>Comprado: {{factura.created}}</h6>
+                            </div>
+                            
                             
                             
                         </div>
@@ -71,5 +98,26 @@
         
 
     </div>
+    <div class="row justify-content-around">
+        <div class="pagination">
+            <span class="step-links">
+                {% if facturas.has_previous %}
+                    <a href="?page=1" class="btn btn-primary">&laquo; first</a>
+                    <a href="?page={{ facturas.previous_page_number }}" class="btn btn-primary">previous</a>
+                {% endif %}
+
+                <span class="btn btn-primary">
+                    Page {{ facturas.number }} of {{ facturas.paginator.num_pages }}.
+                </span>
+
+                {% if facturas.has_next %}
+                    <a  href="?page={{ facturas.next_page_number }}" class="btn btn-primary" >next</a>
+                    <a  href="?page={{ facturas.paginator.num_pages }}" class="btn btn-primary">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
 </div>
+
+
 {% endblock %}

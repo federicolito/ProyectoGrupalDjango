@@ -57,7 +57,7 @@
                         
                         {% for asiento in asientos %}
                             {% if asiento.fila == fila %}
-                                {% if asiento.reservado %}
+                                {% if asiento in asientosReservados %}
                                     <div class="col" style="background-image:url('{% static '/img/butacareservada.png' %}');background-size: 100% 100%;text-align: center;color:white;margin:2px"><input onclick="calcularPrecio()"  type="checkbox" name="{{asiento.fila}}{{asiento.butaca}}" value="{{ asiento.pk}}" disabled>{{ asiento.butaca}}</div>
                                     
                                 {% else %}

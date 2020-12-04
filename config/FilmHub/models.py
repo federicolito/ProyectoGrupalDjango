@@ -1,6 +1,7 @@
 from django.db import models
 import datetime
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 # Create your models here.
 #-----------------------------------------------------------------------------
@@ -15,7 +16,7 @@ class Sala(models.Model):
 
 class Asiento(models.Model):
     id = models.AutoField(primary_key=True)
-    reservado = models.BooleanField(default=False)
+    
     fila = models.CharField(max_length=1)
     butaca = models.IntegerField(default=0, blank=True, null=True)
     sala = models.ForeignKey(Sala, on_delete=models.CASCADE, null=True)
@@ -46,7 +47,7 @@ class Funcion(models.Model):
     horario = models.DateTimeField(null=True)
     sala = models.ForeignKey(Sala, on_delete=models.CASCADE, null=True)
     pelicula = models.ForeignKey(Pelicula, on_delete=models.CASCADE, null=True)
-
+    asientos_reservados =models.ManyToManyField(Asiento, blank=True,null=True)
     def __str__(self):
         fecha_y_hora = self.horario.strftime("%d/%m/%Y - %H:%M")
         return str(self.pelicula) + " | " + str(self.sala) + " | " + fecha_y_hora
@@ -58,6 +59,7 @@ class Boleto(models.Model):
 
     asientos = models.ManyToManyField(Asiento, blank=True)
     funcion = models.ForeignKey(Funcion, on_delete=models.SET_NULL, null=True)
+    
     #pelicula = models.ForeignKey(Pelicula, on_delete=models.CASCADE)
 
     def precio_final(self):
@@ -114,7 +116,7 @@ class Factura(models.Model):
     combo_comida = models.ForeignKey(Combo_Comida, on_delete=models.CASCADE, null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     precio_final = models.IntegerField(default=0, blank=True, null=True)
-
+    created = models.DateTimeField(auto_now_add=True)
     def precio_total(self):
         valor_boleto = self.boleto.funcion.pelicula.precio_base * len(self.boleto.asientos.all())
         try:

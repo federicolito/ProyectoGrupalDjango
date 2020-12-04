@@ -83,6 +83,7 @@ def FuncionesView(request,pelicula):
 def BuyTicketView(request,funcion):
     funcion = Funcion.objects.get(pk=funcion)
     asientos = Asiento.objects.filter(sala=funcion.sala)
+    asientosReservados = funcion.asientos_reservados.all()
     filas =['A','B','C','D','E'] 
     asientosElegidos = []
     asiento = None
@@ -94,8 +95,8 @@ def BuyTicketView(request,funcion):
                 asiento = request.GET.get(fila+str(butaca))
                 
                 asiento = Asiento.objects.get(pk=asiento)
-                asiento.reservado= True
-                asiento.save()
+                funcion.asientos_reservados.add(asiento)
+                funcion.save()
                 asientosElegidos.append(asiento)
                 guardarForm = True
 
@@ -116,7 +117,8 @@ def BuyTicketView(request,funcion):
     
     context= {
     'funcion':funcion,
-    'asientos':asientos, 
+    'asientos':asientos,
+    'asientosReservados':asientosReservados, 
     'filas':filas
     }
     return render(request, 'FilmHub/buy_ticket.html', context)
@@ -158,15 +160,18 @@ def BuyFoodView(request, boleto):
 
 @login_required(login_url='loginView')
 def MyTicketsView(request):
-    facturas = Factura.objects.filter(user=request.user)
+    facturas = Factura.objects.filter(user=request.user).order_by("created")
     
     now = datetime.datetime.now()
     #,horario__gte=now
 
-
+    paginator = Paginator(facturas,4)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
     
     context= {
-        'facturas':facturas
+        'facturas':page_obj
     }
     return render(request, 'FilmHub/my_tickets.html', context)
 def HomeView(request):
