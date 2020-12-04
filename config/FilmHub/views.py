@@ -211,3 +211,14 @@ def page_not_found(request, exception=None,template_name='FilmHub/404.html'):
 def page_not_found_view(request):
     return render(request, 'FilmHub/404.html')
 
+
+@login_required(login_url='loginView')
+def TicketInfoView(request,factura):
+    factura = Factura.objects.get(pk=factura)
+    
+
+
+    
+    context= {
+    'factura':factura}
+    return render(request, 'FilmHub/ticketinfo.html', context)

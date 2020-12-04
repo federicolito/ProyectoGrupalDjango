@@ -22,6 +22,7 @@ urlpatterns = [
     path('client/mytickets/', views.MyTicketsView, name="my_tickets"),
     path('client/buyticket/<int:funcion>', views.BuyTicketView, name="buy_ticket"),
     path('client/buyfood/<int:boleto>', views.BuyFoodView, name="buy_food"),
+    path('client/ticketinfo/<int:factura>', views.TicketInfoView, name="ticket_info"),
     
 
 

@@ -1,0 +1,65 @@
+{% extends 'FilmHub/main.html' %}
+{% load static %}
+{% block content %}
+<div class="container h-100">
+    <div class="row justify-content-around">
+        <div class="col-sm-auto">
+            <div class="card card-body" style="background-color: black;">
+                <div class="row justify-content-center" style="background-color:yellow; color:black">
+                    <h2>FUNCIÓN</h2>
+                </div>
+                <div class="row justify-content-center" style="color:white;">
+                    <a><h3>{{factura.boleto.funcion.pelicula.nombre}}</h3></a>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-auto" style="border: 2px solid yellow">
+                    <img width="212" height="280" src='{{factura.boleto.funcion.pelicula.portada.url}}'>
+                    </div>
+                    <div class="col-md-auto"; style="width:500px; background-color:rgb(32, 32, 32); border: 2px solid yellow; color:white">
+                    <p>{{factura.boleto.funcion.pelicula.descripcion}}</p> 
+                    </div>
+                </div>
+                <div class="row justify-content-left" style="color:white;">
+                    <a><h4>Fecha y Hora: {{factura.boleto.funcion.horario}} </h4></a>
+                </div>
+                <div class="row justify-content-left" style="color:white;">
+                    <a><h4>{{factura.boleto.funcion.sala}} - Asientos: {% for asiento in factura.boleto.asientos.all %}{{ asiento.fila}}{{ asiento.butaca}}, {%endfor%}</h4></a>
+                </div>
+                <div class="row justify-content-left" style="color:white;">
+                    <a><h4>Precio p/asiento: ${{factura.boleto.funcion.pelicula.precio_base}}</h4></a>
+                </div>
+                
+
+                
+
+                <div class="row justify-content-center" style="background-color:yellow; color:black; margin-top:20px">
+                    <h2>ALIMENTOS</h2>
+                </div>
+                <div class="row justify-content-left" style="color:white;">
+                    <a><h4>Comida: {{factura.combo_comida.comida}}</h4></a>
+                </div>
+                <div class="row justify-content-left" style="color:white;">
+                    <a><h4>Cantidad: {{factura.combo_comida.cant_comida}}</h4></a>
+                </div>
+                <div class="row justify-content-left" style="color:white;">
+                    <a><h4>Bebida: {{factura.combo_comida.bebida}}</h4></a>
+                </div>
+                <div class="row justify-content-left" style="color:white;">
+                    <a><h4>Cantidad: {{factura.combo_comida.cant_bebida}}</h4></a>
+                </div>
+
+                
+
+                <div class="row justify-content-center" style="background-color:yellow; color:black; margin-top:20px">
+                    <h2>PRECIO TOTAL</h2>
+                </div>
+
+                <div style="color:white; text-align:center; margin-top:40px">
+                    <a><h4>${{factura.precio_final}}</h4></a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

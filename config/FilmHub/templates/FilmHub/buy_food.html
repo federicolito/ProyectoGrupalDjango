@@ -102,10 +102,18 @@ about page
                         </div>
                         <script>
                             function changeVisibility(){
-                                foodForm.comida.disabled = true;
-                                foodForm.cant_comida.disabled = true;
-                                foodForm.bebida.disabled = true;
-                                foodForm.cant_bebida.disabled = true;
+                                if (foodForm.sinAlimentos.checked){
+                                    foodForm.comida.disabled = true;
+                                    foodForm.cant_comida.disabled = true;
+                                    foodForm.bebida.disabled = true;
+                                    foodForm.cant_bebida.disabled = true;
+                                }else{
+                                    foodForm.comida.disabled = false;
+                                    foodForm.cant_comida.disabled = false;
+                                    foodForm.bebida.disabled = false;
+                                    foodForm.cant_bebida.disabled = false;
+                                }
+                                
 
                             }
 
