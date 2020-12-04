@@ -2,6 +2,7 @@ from django.db import models
 import datetime
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 #-----------------------------------------------------------------------------
@@ -100,9 +101,9 @@ class Combo_Comida(models.Model):
     id = models.AutoField(primary_key=True)
 
     comida = models.ForeignKey(Comida, on_delete=models.CASCADE, blank=True, null=True)
-    cant_comida = models.IntegerField(default=0, blank=True, null=True)
+    cant_comida = models.IntegerField(default=0, blank=True, null=True, validators=[MinValueValidator(1), MaxValueValidator(100)])
     bebida = models.ForeignKey(Bebida, on_delete=models.CASCADE, blank=True, null=True)
-    cant_bebida = models.IntegerField(default=0, blank=True, null=True)
+    cant_bebida = models.IntegerField(default=0, blank=True, null=True, validators=[MinValueValidator(1), MaxValueValidator(100)])
 
     
 

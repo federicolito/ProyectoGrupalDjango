@@ -91,6 +91,13 @@ about page
                         <div class="row justify-content-center">
                             <label>Sin alimentos(solo boleto):<input type="checkbox" onclick="changeVisibility()" name="sinAlimentos"></label>
                         </div>
+                        {% if form.errors %}
+                        <div class="row justify-content-center">
+                            <div class="alert alert-danger" role="alert">
+                                {{form.errors}}
+                            </div>
+                        </div>
+                        {% endif %}
                         <div class="row justify-content-center">
 
                             <div class="col-md">

@@ -3,42 +3,6 @@
 {% block content %}
 <div class="container h-100">
     <div class="row justify-content-around">
-        <div class="col-sm-auto">
-            <div class="card card-body">
-                <div class="row justify-content-center">
-                    <h3>Funcion</h3>
-
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-md">
-                        HORARIO
-                    </div>
-                    <div class="col-md">
-                        SALA
-                    </div>
-                    <div class="col-md">
-                        PRECIO
-                    </div>
-                    
-                </div>  
-                <div class="row justify-content-center">
-                    <div class="col-md">
-                        {{funcion.horario}}
-                    </div>
-                    <div class="col-md">
-                        {{funcion.sala}}
-                    </div>
-                    <div class="col-md">
-                        ${{funcion.pelicula.precio_base}}
-                    </div>
-
-                </div>
-                    
-                
-            </div>
-        </div>
-    </div>
-    <div class="row justify-content-around">
         <div class="col">
             <div class="card card-body">
                 <form method="GET" action="" id="asientosForm">
@@ -46,9 +10,9 @@
                 
                 <fieldset>
                     <legend>Elija los asientos</legend>
-                    <br>
-                    <h1  id="precio">total a pagar:$</h1>
-                    <br>
+                    <div class="row justify-content-center">
+                        <img height="300" src='{%static "img/pantasha.png" %}'>
+                    </div>
                     {% for fila in filas %}
                     <div class="row justify-content-around">
                         <div class="col-auto">
@@ -73,6 +37,9 @@
 
                     </div>
                     {% endfor %}
+                    <br>
+                    <h1  id="precio">total a pagar:$</h1>
+                    <br>
                 </fieldset>
                 
                 <br>
