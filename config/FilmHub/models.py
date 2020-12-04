@@ -125,7 +125,7 @@ class Factura(models.Model):
             self.precio_final = valor_boleto
             print ("dio error")
         self.save()
-        return self.precio_final
+        
 
     def __str__(self):
         fechayhora = datetime.datetime.now()
