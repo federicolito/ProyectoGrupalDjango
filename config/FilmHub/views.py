@@ -17,6 +17,7 @@ from .decorators import unauthenticated_user
 from .forms import CreateUserForm, UserForm, ComboComidaForm
 from .models import *
 from django.views.generic import TemplateView
+from django.db.models import Q
 
 
 
@@ -178,11 +179,20 @@ def MyTicketsView(request):
 def HomeView(request):
     peliculas = Pelicula.objects.all()
 
+    queryset = request.GET.get("buscar")
+    if queryset:
+        peliculas = Pelicula.objects.filter(
+            Q(nombre__icontains = queryset) |
+            Q(descripcion__icontains = queryset)
+        ).distinct()
 
+    if (queryset == None):
+        queryset = ""
+        
     paginator = Paginator(peliculas,10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    context={'peliculas':page_obj}
+    context={'peliculas':page_obj, 'buscar':queryset}
     return render(request, 'FilmHub/home.html',context)
 
 
